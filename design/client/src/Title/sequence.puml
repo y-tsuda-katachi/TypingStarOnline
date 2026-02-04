@@ -1,0 +1,11 @@
+@startuml Title
+skinparam actorStyle awesome
+
+actor "プレイヤー" as Player
+participant "クライアント" as Client
+database "サーバー" as Server
+
+Player --> Client : 接続
+Client --> Server : プレイヤーの登録
+Server --> Client : プレイヤー情報のレスポンス
+@enduml

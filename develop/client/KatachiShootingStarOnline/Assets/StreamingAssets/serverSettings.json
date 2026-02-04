@@ -1,0 +1,153 @@
+{
+    "httpProtocol": "http",
+    "wsProtocol": "ws",
+    "serverLocation": "localhost",
+    "port": 8080,
+    "apiList": [
+        {
+            "name": "websocket",
+            "availableRequests": [
+                {
+                    "name": "matchMessage",
+                    "endpoint": "/match/message"
+                }
+            ]
+        },
+        {
+            "name": "actuator",
+            "availableRequests": [
+                {
+                    "name": "health",
+                    "method": "GET",
+                    "endpoint": "/actuator/health"
+                }
+            ]
+        },
+        {
+            "name": "player",
+            "availableRequests": [
+                {
+                    "name": "connect",
+                    "method": "GET",
+                    "endpoint": "/player/connect?playerId={playerId}&playerName={playerName}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{playerName}"
+                        }
+                    ]
+                },
+                {
+                    "name": "disconnect",
+                    "method": "GET",
+                    "endpoint": "/player/disconnect?playerId={playerId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "match",
+            "availableRequests": [
+                {
+                    "name": "getAll",
+                    "method": "GET",
+                    "endpoint": "/match/get/all?playerId={playerId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        }
+                    ]
+                },
+                {
+                    "name": "get",
+                    "method": "GET",
+                    "endpoint": "/match/get?playerId={playerId}&matchId={matchId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{matchId}"
+                        }
+                    ]
+                },
+                {
+                    "name": "enter",
+                    "method": "GET",
+                    "endpoint": "/match/enter?playerId={playerId}&matchId={matchId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{matchId}"
+                        }
+                    ]
+                },
+                {
+                    "name": "exit",
+                    "method": "GET",
+                    "endpoint": "/match/exit?playerId={playerId}&matchId={matchId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{matchId}"
+                        }
+                    ]
+                },
+                {
+                    "name": "start",
+                    "method": "GET",
+                    "endpoint": "/match/start?playerId={playerId}&matchId={matchId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{matchId}"
+                        }
+                    ]
+                },
+                {
+                    "name": "end",
+                    "method": "GET",
+                    "endpoint": "/match/end?playerId={playerId}&matchId={matchId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{matchId}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "result",
+            "availableRequests": [
+                {
+                    "name": "post",
+                    "method": "POST",
+                    "endpoint": "/result/post?playerId={playerId}&matchId={matchId}",
+                    "parameters": [
+                        {
+                            "placeholder": "{playerId}"
+                        },
+                        {
+                            "placeholder": "{matchId}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+@startuml Title
+left to right direction 
+skinparam actorStyle awesome
+
+actor "プレイヤー" as Player
+
+usecase "接続" as Connect
+entity "セッション情報" as Session
+usecase "切断" as Disconnect
+
+Player -- Connect : プレイヤー名の登録
+Disconnect .. Session : <<include>>
+Player -- Disconnect
+@enduml

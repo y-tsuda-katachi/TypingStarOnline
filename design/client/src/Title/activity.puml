@@ -1,0 +1,19 @@
+@startuml Title
+start
+
+if (最後のプレイヤー情報が残っているか？) then (残っている)
+    :プレイヤー名を表示;
+endif
+    :プレイヤー名の入力;
+:サーバーへ接続;
+while (接続成功したか？) is (失敗)
+    :エラーメッセージを表示;
+    :再接続;
+        if (接続成功したか？) then (成功)
+            break;
+        endif
+end while (成功)
+:マッチ画面へ;
+
+stop
+@enduml

@@ -1,0 +1,20 @@
+@startuml usecase
+left to right direction
+
+actor "プレイヤー" as Player
+
+rectangle "クライアント" {
+    usecase "マッチ検索" as SearchMatch
+    usecase "マッチ参加" as EnterMatch
+    usecase "マッチ離脱" as ExitMatch
+    usecase "リザルト確認" as ReadResult
+}
+
+rectangle "サーバー" {
+    usecase "セッション確立" as InitializeSession
+    usecase "セッション破棄" as DestroySession
+    usecase "マッチ一覧取得" as GetMatchList
+    usecase "マッチ参加申請" as SigninMatch
+    usecase "マッチ離脱申請" as SignoutMatch
+}
+@enduml

@@ -1,0 +1,35 @@
+1.プレイヤー接続機能
+
+    - 接続: /player/connect?playerName={プレイヤー名}
+        戻り値: セッションID
+        
+    - 切断: /player/connect;jsessionid={セッションID}
+        戻り値: 成功時->true, 失敗時->false
+        
+2.マッチ機能
+
+    - 全部検索: /match/get;jsessionid={セッションID}
+        戻り値: 成功時->マッチ一覧, 失敗時->null
+        
+    - 一部検索: /match/get/{マッチID};jsessionid={セッションID}
+    	戻り値: 成功時->マッチ, 失敗時->null
+    	
+    - 参加: /match/enter/{マッチID};jsessionid={セッションID}
+        戻り値: 成功時->SseEmitter, 失敗時->false
+        
+    - 退出: /match/exit/{マッチID};jsessionid={セッションID}
+        戻り値: 成功時->true, 失敗時->false
+        
+    - 開始: /match/start/{マッチID};jsessionid={セッションID}
+    	戻り値: 成功時->true, 失敗時->false
+    	
+    - 終了: /match/end/{マッチID};jsessionid={セッションID}
+    	戻り値: 成功時->true, 失敗時->false
+    	
+3.リザルト機能
+
+    - 送信: /result/post/{マッチID};jsessionid={セッションID}
+        戻り値: 成功時->SseEmitter, 失敗時->null||false
+        
+    - 取得: /result/get/1;jsessionid={セッションID}
+        戻り値: 成功時->マッチリザルト, 失敗時->null||false
