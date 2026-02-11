@@ -1,4 +1,4 @@
-package app.katachiplus.domain.model;
+package app.katachiplus.domain.model.message;
 
 import lombok.Data;
 

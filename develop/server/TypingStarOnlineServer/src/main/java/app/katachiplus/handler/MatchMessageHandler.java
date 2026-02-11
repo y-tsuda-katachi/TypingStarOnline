@@ -6,9 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import app.katachiplus.domain.model.Match;
 import app.katachiplus.domain.service.MatchService;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class MatchMessageHandler implements WebSocketHandler {
+public class MatchMessageHandler extends AbstractWebSocketHandler {
 	
 	private final Map<Match, KSet<WebSocketSession>> matchSessions = new HashMap<>();
 
@@ -78,14 +78,5 @@ public class MatchMessageHandler implements WebSocketHandler {
 		return session
 				.getHandshakeHeaders()
 				.getFirst("Match-Id");
-	}
-
-	@Override
-	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-	}
-
-	@Override
-	public boolean supportsPartialMessages() {
-		return false;
 	}
 }
