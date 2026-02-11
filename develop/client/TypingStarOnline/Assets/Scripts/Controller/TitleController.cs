@@ -6,20 +6,14 @@ public class TitleController : MonoBehaviour
 {
     private TitlePresenter titlePresenter;
 
-    private void Awake()
-    {
+    private void Awake() =>
         titlePresenter = FindAnyObjectByType<TitlePresenter>();
-    }
 
-    public async Task InitREST()
-    {
+    public async Task InitREST() => 
         await REST.Initialize();
-    }
 
-    public void SetLastPlayer(Player player)
-    {
+    public void SetLastPlayer(Player player) =>
         titlePresenter.SetInputPlayerName(player.playerName);
-    }
 
     public async void UpdateConnection()
     {
@@ -37,8 +31,6 @@ public class TitleController : MonoBehaviour
         return await REST.ConnectPlayer(player);
     }
 
-    public async Task<bool> Disconnect(Player player)
-    {
-        return await REST.RemovePlayer(player);
-    }
+    public async Task<bool> Disconnect(Player player) => 
+        await REST.RemovePlayer(player);
 }

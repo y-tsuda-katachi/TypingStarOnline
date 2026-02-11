@@ -10,10 +10,8 @@ public class TitleManager : MonoBehaviour
 {
     private TitleController titleController;
 
-    private void Awake()
-    {
+    private void Awake() =>
         titleController = FindAnyObjectByType<TitleController>();
-    }
 
     private async void Start()
     {
