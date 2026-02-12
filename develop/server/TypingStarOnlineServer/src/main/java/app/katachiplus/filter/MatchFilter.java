@@ -39,7 +39,7 @@ public class MatchFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		var matchId = request.getParameter("matchId");
 		if (matchId != null) {
-			var match = matchService.findMatchById(matchId);
+			var match = matchService.findById(matchId);
 			
 			if (match != null)
 				filterChain.doFilter(request, response);

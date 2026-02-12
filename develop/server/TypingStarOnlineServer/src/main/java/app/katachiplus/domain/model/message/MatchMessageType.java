@@ -11,18 +11,21 @@ public enum MatchMessageType {
 	Leave(1),
 	/** マッチを開始 */
 	Start(2),
-	/** マッチを作成 */
-	Create(3),
-	/** マッチ削除 */
-	Destroy(4);
+	/** マッチ中止 */
+	Cancel(3);
 	
-	private int value;
+	private Integer value;
 	
-	private MatchMessageType(int value) {
+	private MatchMessageType(Integer value) {
 		this.value = value;
 	}
 	
-	public int getValue() {
+	public Integer getValue() {
 		return this.value;
+	}
+	
+	@Override
+	public String toString() {
+		return getValue().toString();
 	}
 }

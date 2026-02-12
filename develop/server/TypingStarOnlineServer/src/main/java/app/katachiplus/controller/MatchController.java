@@ -8,30 +8,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.katachiplus.domain.model.Match;
 import app.katachiplus.domain.service.MatchService;
-import app.katachiplus.domain.service.PlayerService;
 import app.katachiplus.utility.KSet;
 
 @RestController
 @RequestMapping("/match")
 public class MatchController {
 
-	@Autowired
-	private PlayerService playerService;
+	/*@Autowired
+	private PlayerService playerService;*/
 
 	@Autowired
 	private MatchService matchService;
 
 	@GetMapping("/get/all")
 	public KSet<Match> getMatches() {
-		return matchService.findMatches();
+		return matchService.findAll();
 	}
 	
 	@GetMapping("/get")
 	public Match getMatch(@RequestParam String matchId) {
-		return matchService.findMatchById(matchId);
+		return matchService.findById(matchId);
 	}
 	
-	@GetMapping("/enter")
+	/*@GetMapping("/enter")
 	public Object enter(@RequestParam String playerId, @RequestParam String matchId) {
 		var player = playerService.findPlayerById(playerId);
 		var match = matchService.findMatchById(matchId);
@@ -50,5 +49,5 @@ public class MatchController {
 		var player = playerService.findPlayerById(playerId);
 		var match = matchService.findMatchById(matchId);
 		return matchService.startMatch(player, match);
-	}
+	}*/
 }

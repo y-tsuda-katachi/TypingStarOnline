@@ -1,8 +1,5 @@
 package app.katachiplus.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -10,73 +7,55 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
-import app.katachiplus.domain.model.Match;
+import app.katachiplus.domain.model.MatchSession;
+import app.katachiplus.domain.model.message.MatchMessage;
 import app.katachiplus.domain.service.MatchService;
+import app.katachiplus.domain.service.PlayerService;
 import app.katachiplus.utility.KSet;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Slf4j
 public class MatchMessageHandler extends AbstractWebSocketHandler {
-	
-	private final Map<Match, KSet<WebSocketSession>> matchSessions = new HashMap<>();
 
+	private final KSet<MatchSession> matchSessions = new KSet<>();
+	@Autowired
+	private PlayerService playerService;
 	@Autowired
 	private MatchService matchService;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		var matchId = getMatchId(session);
-		var match = matchService.findMatchById(matchId);
-		var sessions = matchSessions.get(match);
-		if (sessions == null) {
-			sessions = new KSet<WebSocketSession>();
-			sessions.add(session);
-			matchSessions.put(match, sessions);
-		} else {
-			if (matchSessions
-					.get(match)
-					.any(s -> s.getId()
-							.equals(session.getId())) == false)
-				matchSessions
-						.get(match)
-						.add(session);
-		}
+		var matchId = session.getHandshakeHeaders().getFirst("Match-Id");
+		var matchSession = matchSessions.selectOne(ms -> ms.getMatchId().equals(matchId));
+		if (matchSession == null)
+			matchSession = new MatchSession(matchId, new KSet<>());
+		matchSession.getSessions().add(session);
 	}
 
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-		var matchId = getMatchId(session);
-		var match = matchService.findMatchById(matchId);
-		matchSessions
-				.get(match)
-				.selectMany(s -> s.getId().equals(session.getId()) == false)
-				.forEach(s -> {
-					try {
-						s.sendMessage(message);
-						log.info(session.getId() + " sends to " + s.getId());
-					} catch (Exception e) {
-						log.error(e.getMessage());
-					}
-				});
+		if (message instanceof MatchMessage) {
+			var matchMessage = (MatchMessage) message;
+			var player = playerService.findPlayerById(matchMessage.getPlayerId());
+			var match = matchService.findById(matchMessage.getMatchId());
+
+			var isSuccessed = false;
+			switch (matchMessage.getMatchMessageType()) {
+				case Join -> isSuccessed = matchService.join(match, player);
+				case Leave -> isSuccessed = matchService.leave(match, player);
+				case Start -> isSuccessed = matchService.start(match, player);
+				case Cancel -> isSuccessed = matchService.cancel(match, player);
+			}
+
+			if (isSuccessed) {
+				// TODO: MatchServiceにメッセージを送るようのメソッドを追加予定
+			}
+		}
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-		var matchId = getMatchId(session);
-		var match = matchService.findMatchById(matchId);
-		var player = matchSessions
-				.get(match)
-				.selectOne(s -> s.getId()
-						.equals(session.getId()));
-		matchSessions
-				.get(match)
-				.remove(player);
-	}
-
-	private String getMatchId(WebSocketSession session) throws Exception {
-		return session
-				.getHandshakeHeaders()
-				.getFirst("Match-Id");
+		var matchId = session.getHandshakeHeaders().getFirst("Match-Id");
+		var matchSession = matchSessions.selectOne(ms -> ms.getMatchId().equals(matchId));
+		matchSession.getSessions().remove(session);
 	}
 }

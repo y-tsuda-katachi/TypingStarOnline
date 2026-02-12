@@ -29,7 +29,7 @@ public class ResultController {
 	public boolean post(@RequestBody GameResult gameResult, @RequestParam String playerId,
 			@RequestParam String matchId) {
 		var player = playerService.findPlayerById(playerId);
-		var match = matchService.findMatchById(matchId);
-		return resultService.postGameResult(player, match, gameResult);
+		var match = matchService.findById(matchId);
+		return resultService.postGameResult(match, player, gameResult);
 	}
 }

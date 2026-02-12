@@ -7,6 +7,7 @@ import lombok.Data;
  * */
 @Data
 public class MatchMessage {
-	
-	private MatchMessageType type;
+	private MatchMessageType matchMessageType;
+	private String matchId;
+	private String playerId;
 }

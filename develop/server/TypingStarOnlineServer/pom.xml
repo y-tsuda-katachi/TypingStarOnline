@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>app.katachiplus</groupId>
-	<artifactId>TypingRaceGameServer</artifactId>
+	<artifactId>TypingStartOnlineServer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>TypingRaceGameServer</name>
-	<description>Server application for players in &apos;TypingRaceGame&apos;.</description>
+	<name>TypingStartOnlineServer</name>
+	<description>Server application for players in &apos;TypingStartOnline&apos;.</description>
 	<url/>
 	<licenses>
 		<license/>

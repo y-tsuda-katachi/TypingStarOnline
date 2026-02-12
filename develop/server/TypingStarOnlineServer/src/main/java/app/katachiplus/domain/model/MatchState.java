@@ -6,10 +6,12 @@ package app.katachiplus.domain.model;
 public enum MatchState {
 	/** 接続待ち */
 	Waiting(0),
+	/** キャンセル済み */
+	Canceled(1),
 	/** 開始済 */
-	Started(1),
+	Started(2),
 	/** 終了済 */
-	Ended(1);
+	Ended(3);
 	
 	private Integer value;
 	

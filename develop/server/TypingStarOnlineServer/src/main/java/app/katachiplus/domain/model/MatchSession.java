@@ -1,26 +1,24 @@
 package app.katachiplus.domain.model;
 
+import org.springframework.web.socket.WebSocketSession;
+
 import app.katachiplus.utility.KSet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Match {
-	private String id;
-	private Player owner;
-	private TypingWordAsset typingWordAsset;
-	private Integer maxPlayerAmount;
-	private MatchState state;
-	private KSet<Player> players;
-
+public class MatchSession {
+	private String matchId;
+	private KSet<WebSocketSession> sessions;
+	
 	@Override
 	public boolean equals(Object other) {
-		if (other instanceof Match)
-			return this.id == ((Match) other).getId();
+		if (other instanceof MatchSession)
+			return this.matchId == ((MatchSession) other).getMatchId();
 		return super.equals(other);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return super.hashCode();

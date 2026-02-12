@@ -5,5 +5,5 @@ import app.katachiplus.domain.model.Match;
 import app.katachiplus.domain.model.Player;
 
 public interface ResultService {
-	public boolean postGameResult(Player player, Match match, GameResult gameResult);
+	public boolean postGameResult(Match match, Player player, GameResult gameResult);
 }
