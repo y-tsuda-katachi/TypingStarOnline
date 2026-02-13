@@ -14,9 +14,6 @@ import app.katachiplus.utility.KSet;
 @RequestMapping("/match")
 public class MatchController {
 
-	/*@Autowired
-	private PlayerService playerService;*/
-
 	@Autowired
 	private MatchService matchService;
 
@@ -29,25 +26,5 @@ public class MatchController {
 	public Match getMatch(@RequestParam String matchId) {
 		return matchService.findById(matchId);
 	}
-	
-	/*@GetMapping("/enter")
-	public Object enter(@RequestParam String playerId, @RequestParam String matchId) {
-		var player = playerService.findPlayerById(playerId);
-		var match = matchService.findMatchById(matchId);
-		return matchService.enterMatch(player, match);
-	}
-	
-	@GetMapping("/exit")
-	public boolean exit(@RequestParam String playerId, @RequestParam String matchId) {
-		var player = playerService.findPlayerById(playerId);
-		var match = matchService.findMatchById(matchId);
-		return matchService.exitMatch(player, match);
-	}
-	
-	@GetMapping("/start")
-	public boolean start(@RequestParam String playerId, @RequestParam String matchId) {
-		var player = playerService.findPlayerById(playerId);
-		var match = matchService.findMatchById(matchId);
-		return matchService.startMatch(player, match);
-	}*/
+
 }

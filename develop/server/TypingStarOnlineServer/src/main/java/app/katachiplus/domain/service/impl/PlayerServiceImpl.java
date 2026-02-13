@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 import app.katachiplus.domain.model.Player;
 import app.katachiplus.domain.service.PlayerService;
 import app.katachiplus.utility.KSet;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @EnableScheduling
-@Slf4j
 public class PlayerServiceImpl implements PlayerService {
 
 	private final KSet<Player> players = new KSet<>();
@@ -27,12 +25,12 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public Player findPlayerById(String playerId) {
+	public Player findById(String playerId) {
 		return players.selectOne(p -> p.getId().equals(playerId));
 	}
 
 	@Override
-	public boolean removePlayerById(String playerId) {
+	public boolean removeById(String playerId) {
 		var player = players.selectOne(p -> p.getId().equals(playerId));
 		return players.remove(player);
 	}

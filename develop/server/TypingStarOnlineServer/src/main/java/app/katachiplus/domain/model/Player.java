@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Player implements Comparable<Player> {
 	private String id;
+	// TODO: パスワードを追加してServiceで認証
 	private String name;
 	private GameResult gameResult;
 	private Long lastAccessedTime;

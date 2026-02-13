@@ -1,4 +1,4 @@
-package app.katachiplus.handler;
+package app.katachiplus.domain.model.message.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,11 +9,16 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import app.katachiplus.domain.model.MatchSession;
 import app.katachiplus.domain.model.message.MatchMessage;
+import app.katachiplus.domain.model.message.MatchProgressMessage;
+import app.katachiplus.domain.model.message.MatchResultMessage;
 import app.katachiplus.domain.service.MatchService;
 import app.katachiplus.domain.service.PlayerService;
+import app.katachiplus.domain.service.ResultService;
 import app.katachiplus.utility.KSet;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class MatchMessageHandler extends AbstractWebSocketHandler {
 
 	private final KSet<MatchSession> matchSessions = new KSet<>();
@@ -21,6 +26,8 @@ public class MatchMessageHandler extends AbstractWebSocketHandler {
 	private PlayerService playerService;
 	@Autowired
 	private MatchService matchService;
+	@Autowired
+	private ResultService resultService;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -35,20 +42,39 @@ public class MatchMessageHandler extends AbstractWebSocketHandler {
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		if (message instanceof MatchMessage) {
 			var matchMessage = (MatchMessage) message;
-			var player = playerService.findPlayerById(matchMessage.getPlayerId());
+			var player = playerService.findById(matchMessage.getPlayerId());
 			var match = matchService.findById(matchMessage.getMatchId());
+			var isSucceeded = false;
 
-			var isSuccessed = false;
-			switch (matchMessage.getMatchMessageType()) {
-				case Join -> isSuccessed = matchService.join(match, player);
-				case Leave -> isSuccessed = matchService.leave(match, player);
-				case Start -> isSuccessed = matchService.start(match, player);
-				case Cancel -> isSuccessed = matchService.cancel(match, player);
-			}
+			if (message instanceof MatchProgressMessage)
+				isSucceeded = true; // とりあえず無条件で通す
+			else if (message instanceof MatchResultMessage)
+				isSucceeded = resultService.postGameResult(match, player,
+						((MatchResultMessage) message).getGameResult());
+			else
+				switch (matchMessage.getType()) {
+					case Join -> isSucceeded = matchService.join(match, player);
+					case Leave -> isSucceeded = matchService.leave(match, player);
+					case Start -> isSucceeded = matchService.start(match, player);
+					case Cancel -> isSucceeded = matchService.cancel(match, player);
+				}
 
-			if (isSuccessed) {
-				// TODO: MatchServiceにメッセージを送るようのメソッドを追加予定
-			}
+			if (isSucceeded == false)
+				// 何らかの理由で処理に失敗したら送信しない
+				return;
+
+			matchSessions
+					.selectOne(ms -> ms
+							.getMatchId()
+							.equals(match.getId()))
+					.getSessions()
+					.forEach(s -> {
+						try {
+							s.sendMessage(message);
+						} catch (Exception e) {
+							log.error(e.getMessage());
+						}
+					});
 		}
 	}
 

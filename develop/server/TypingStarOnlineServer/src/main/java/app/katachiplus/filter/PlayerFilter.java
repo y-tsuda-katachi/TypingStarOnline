@@ -38,7 +38,7 @@ public class PlayerFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		var playerId = request.getParameter("playerId");
-		var player = playerService.findPlayerById(playerId);
+		var player = playerService.findById(playerId);
 
 		if (player != null) {
 			playerService.updateLastAccessedTime(player, Instant.now().toEpochMilli());

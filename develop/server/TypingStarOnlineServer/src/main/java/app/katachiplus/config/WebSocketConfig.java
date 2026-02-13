@@ -6,7 +6,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import app.katachiplus.handler.MatchMessageHandler;
+import app.katachiplus.domain.model.message.handler.MatchMessageHandler;
 
 @Configuration
 @EnableWebSocket

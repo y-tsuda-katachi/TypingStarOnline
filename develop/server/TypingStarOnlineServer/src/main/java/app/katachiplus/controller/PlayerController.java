@@ -30,6 +30,6 @@ public class PlayerController {
 	
 	@GetMapping("/disconnect")
 	public boolean disconnect(@RequestParam String playerId) {
-		return playerService.removePlayerById(playerId);
+		return playerService.removeById(playerId);
 	}
 }
