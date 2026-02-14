@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.katachiplus.domain.model.Match;
+import app.katachiplus.domain.model.match.Match;
 import app.katachiplus.domain.service.MatchService;
 import app.katachiplus.utility.KSet;
 

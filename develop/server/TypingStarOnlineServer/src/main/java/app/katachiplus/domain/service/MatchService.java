@@ -1,8 +1,8 @@
 package app.katachiplus.domain.service;
 
 import app.katachiplus.domain.model.Invalidatable;
-import app.katachiplus.domain.model.Match;
-import app.katachiplus.domain.model.Player;
+import app.katachiplus.domain.model.match.Match;
+import app.katachiplus.domain.model.player.Player;
 import app.katachiplus.utility.KSet;
 
 public interface MatchService extends Invalidatable {

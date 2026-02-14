@@ -1,16 +1,17 @@
 package app.katachiplus.controller;
 
-import java.time.Instant;
-
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.katachiplus.domain.model.Player;
+import app.katachiplus.domain.model.form.LoginForm;
+import app.katachiplus.domain.model.form.SignupForm;
+import app.katachiplus.domain.model.player.Player;
 import app.katachiplus.domain.service.PlayerService;
 
 @RestController
@@ -19,17 +20,26 @@ public class PlayerController {
 
 	@Autowired
 	private PlayerService playerService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-	@GetMapping("/connect")
-	public Player connect(@RequestParam String playerId, @RequestParam String playerName, HttpSession session) {
-		if (playerId == null || playerId.isEmpty())
-			playerId = session.getId();
-		var player = new Player(playerId, playerName, Instant.now().toEpochMilli());
-		return playerService.addPlayer(player) ? player : null;
+	@PostMapping("/signup")
+	public boolean signup(@RequestBody SignupForm signupForm) {
+		return playerService.signup(
+				signupForm.getPlayerId(), 
+				passwordEncoder.encode(signupForm.getPassword()));
 	}
 	
-	@GetMapping("/disconnect")
-	public boolean disconnect(@RequestParam String playerId) {
-		return playerService.removeById(playerId);
+	@PostMapping("login")
+	public Player login(@RequestBody LoginForm loginForm) {
+		return playerService.login(
+				loginForm.getPlayerId(), 
+				passwordEncoder.encode(loginForm.getPassword()));
+	}
+	
+	@GetMapping("logout")
+	public boolean logout(@RequestParam String playerId) {
+		return playerService.logout(playerId);
 	}
 }

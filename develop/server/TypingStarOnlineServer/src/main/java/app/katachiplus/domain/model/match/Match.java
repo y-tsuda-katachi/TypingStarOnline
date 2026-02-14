@@ -1,5 +1,7 @@
-package app.katachiplus.domain.model;
+package app.katachiplus.domain.model.match;
 
+import app.katachiplus.domain.model.TypingWordAsset;
+import app.katachiplus.domain.model.player.Player;
 import app.katachiplus.utility.KSet;
 import lombok.AllArgsConstructor;
 import lombok.Data;

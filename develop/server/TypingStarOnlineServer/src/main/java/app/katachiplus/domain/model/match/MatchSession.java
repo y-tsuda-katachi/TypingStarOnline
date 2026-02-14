@@ -1,4 +1,4 @@
-package app.katachiplus.domain.model;
+package app.katachiplus.domain.model.match;
 
 import org.springframework.web.socket.WebSocketSession;
 

@@ -7,7 +7,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
-import app.katachiplus.domain.model.MatchSession;
+import app.katachiplus.domain.model.match.MatchSession;
 import app.katachiplus.domain.model.message.MatchMessage;
 import app.katachiplus.domain.model.message.MatchProgressMessage;
 import app.katachiplus.domain.model.message.MatchResultMessage;

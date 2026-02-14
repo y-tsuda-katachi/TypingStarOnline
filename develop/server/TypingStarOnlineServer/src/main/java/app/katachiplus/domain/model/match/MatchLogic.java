@@ -1,6 +1,10 @@
-package app.katachiplus.domain.model;
+package app.katachiplus.domain.model.match;
 
 import java.util.List;
+
+import app.katachiplus.domain.model.GameResult;
+import app.katachiplus.domain.model.player.Player;
+import app.katachiplus.domain.model.player.PlayerComparator;
 
 public class MatchLogic {
 
@@ -122,7 +126,7 @@ public class MatchLogic {
 				.getPlayers()
 				.stream()
 				.filter(p -> p.hasGameResult())
-				.sorted()
+				.sorted(new PlayerComparator())
 				.toList();
 	}
 }

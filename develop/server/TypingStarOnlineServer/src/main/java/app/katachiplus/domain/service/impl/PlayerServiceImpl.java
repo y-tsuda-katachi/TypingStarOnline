@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import app.katachiplus.domain.model.Player;
+import app.katachiplus.domain.model.player.Player;
 import app.katachiplus.domain.service.PlayerService;
 import app.katachiplus.utility.KSet;
 
@@ -17,22 +17,29 @@ public class PlayerServiceImpl implements PlayerService {
 	private final KSet<Player> players = new KSet<>();
 
 	@Override
-	public boolean addPlayer(Player player) {
-		if (players.any(p -> p.equals(player)))
-			players.selectOne(p -> p.equals(player))
-					.setName(player.getName());
+	public boolean signup(String playerId, String password) {
+		// TODO: バリデーションチェック後にDBへ登録
+		var player = new Player(playerId, password, null, Instant.now().toEpochMilli());
 		return players.add(player);
 	}
 
 	@Override
-	public Player findById(String playerId) {
-		return players.selectOne(p -> p.getId().equals(playerId));
+	public Player login(String playerId, String password) {
+		// TODO: バリデーションチェック後にDBへ問い合わせ
+		return players
+				.selectOne(p -> p.getId().equals(playerId) &&
+						p.getPassword().equals(password));
 	}
 
 	@Override
-	public boolean removeById(String playerId) {
+	public boolean logout(String playerId) {
 		var player = players.selectOne(p -> p.getId().equals(playerId));
 		return players.remove(player);
+	}
+	
+	@Override
+	public Player findById(String playerId) {
+		return players.selectOne(p -> p.getId().equals(playerId));
 	}
 
 	@Override

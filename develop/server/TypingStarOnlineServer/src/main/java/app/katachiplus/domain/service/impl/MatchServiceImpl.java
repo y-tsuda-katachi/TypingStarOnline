@@ -4,10 +4,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import app.katachiplus.domain.model.Match;
-import app.katachiplus.domain.model.MatchLogic;
-import app.katachiplus.domain.model.MatchState;
-import app.katachiplus.domain.model.Player;
+import app.katachiplus.domain.model.match.Match;
+import app.katachiplus.domain.model.match.MatchLogic;
+import app.katachiplus.domain.model.match.MatchState;
+import app.katachiplus.domain.model.player.Player;
 import app.katachiplus.domain.service.MatchService;
 import app.katachiplus.utility.KSet;
 
