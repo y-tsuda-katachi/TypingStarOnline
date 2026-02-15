@@ -24,14 +24,6 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public Player login(String playerId, String password) {
-		// TODO: バリデーションチェック後にDBへ問い合わせ
-		return players
-				.selectOne(p -> p.getId().equals(playerId) &&
-						p.getPassword().equals(password));
-	}
-
-	@Override
 	public boolean logout(String playerId) {
 		var player = players.selectOne(p -> p.getId().equals(playerId));
 		return players.remove(player);

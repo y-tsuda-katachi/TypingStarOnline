@@ -46,9 +46,9 @@ public class MatchMessageHandler extends AbstractWebSocketHandler {
 			var match = matchService.findById(matchMessage.getMatchId());
 			var isSucceeded = false;
 
-			if (message instanceof MatchProgressMessage)
+			if (message instanceof MatchProgressMessage) // 進捗メッセージ
 				isSucceeded = true; // とりあえず無条件で通す
-			else if (message instanceof MatchResultMessage)
+			else if (message instanceof MatchResultMessage) // リザルトメッセージ
 				isSucceeded = resultService.postGameResult(match, player,
 						((MatchResultMessage) message).getGameResult());
 			else
@@ -70,7 +70,8 @@ public class MatchMessageHandler extends AbstractWebSocketHandler {
 					.getSessions()
 					.forEach(s -> {
 						try {
-							s.sendMessage(message);
+							if (s.getId().equals(session.getId()) == false)
+								s.sendMessage(message);
 						} catch (Exception e) {
 							log.error(e.getMessage());
 						}

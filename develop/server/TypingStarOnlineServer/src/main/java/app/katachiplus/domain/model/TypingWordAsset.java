@@ -1,12 +1,16 @@
 package app.katachiplus.domain.model;
 
+import java.util.List;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 /**
  * タイピングワードをまとめたアセット
  * */
+@Data
+@AllArgsConstructor
 public class TypingWordAsset {
 	private String assetName;
-	private TypingWord[] typingWords;
+	private List<TypingWord> typingWords;
 }

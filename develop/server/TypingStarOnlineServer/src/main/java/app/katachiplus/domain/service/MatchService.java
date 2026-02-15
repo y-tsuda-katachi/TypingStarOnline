@@ -8,6 +8,7 @@ import app.katachiplus.utility.KSet;
 public interface MatchService extends Invalidatable {
 	public KSet<Match> findAll();
 	public Match findById(String matchId);
+	public boolean create(String assetName, Integer maxPlayerAmount);
 	public boolean join(Match match, Player player);
 	public boolean leave(Match match, Player player);
 	public boolean start(Match match, Player player);

@@ -16,7 +16,7 @@ import app.katachiplus.utility.KSet;
 public class MatchServiceImpl implements MatchService {
 
 	private final KSet<Match> matches = new KSet<>();
-
+	
 	@Override
 	public KSet<Match> findAll() {
 		return matches;
@@ -25,6 +25,12 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public Match findById(String matchId) {
 		return matches.selectOne(m -> m.getId().equals(matchId));
+	}
+	
+	@Override
+	public boolean create(String assetName, Integer maxPlayerAmount) {
+		
+		return false;
 	}
 
 	@Override
